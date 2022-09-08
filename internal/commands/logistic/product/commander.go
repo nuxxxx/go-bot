@@ -42,6 +42,8 @@ func (c *DummyProductCommander) HandleUpdate(inputMsg *tgbotapi.Message) {
 		c.New(inputMsg)
 	case "delete":
 		c.Delete(inputMsg)
+	case "edit":
+		c.Edit(inputMsg)
 	default:
 		return
 	}

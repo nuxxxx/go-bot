@@ -1,6 +1,7 @@
 package commands
 
 import (
+	"github/nuxxxcake/go-bot/internal/service/logistic/product"
 	"strconv"
 	"strings"
 
@@ -19,7 +20,7 @@ func (c *DummyProductCommander) List(inputMessage *tgbotapi.Message) {
 		return
 	}
 
-	pLen := c.service.ProductsLength()
+	pLen := product.ProductsLength()
 
 	if pLen == 0 {
 		msg := tgbotapi.NewMessage(inputMessage.Chat.ID, "There is no elements")

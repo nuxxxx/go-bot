@@ -8,11 +8,10 @@ var products = map[uint64]logistic.Product{}
 
 type ProductService interface {
 	Describe(productID uint64) (*logistic.Product, error)
-	ProductsLength() uint64
 	List(cursor uint64, limit uint64) ([]logistic.Product, error)
 	Create(logistic.Product) (uint64, error)
 	Remove(productID uint64) (bool, error)
-	// Update(productID uint64, Product logistic.Product) error
+	Update(productID uint64, Product logistic.Product) error
 }
 
 type DummyProductService struct{}
