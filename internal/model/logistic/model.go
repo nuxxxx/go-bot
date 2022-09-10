@@ -4,8 +4,6 @@ import (
 	"fmt"
 )
 
-var CURRENT_ID uint64 = 0
-
 type Product struct {
 	ID       uint64
 	Title    string

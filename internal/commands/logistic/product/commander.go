@@ -16,18 +16,45 @@ type ProductCommander interface {
 
 	New(inputMsg *tgbotapi.Message)
 	Edit(inputMsg *tgbotapi.Message)
+
+	CbList(inputCb *tgbotapi.CallbackQuery)
+}
+
+type CallbackQueryItem struct {
+	name           string
+	additionalData interface{}
 }
 
 type DummyProductCommander struct {
-	bot     *tgbotapi.BotAPI
-	service service.ProductService
+	bot                *tgbotapi.BotAPI
+	service            service.ProductService
+	callbackQueryQueue []CallbackQueryItem
+}
+
+func NewCallbackQueryItem(name string, additionalData interface{}) *CallbackQueryItem {
+	return &CallbackQueryItem{
+		name:           name,
+		additionalData: additionalData,
+	}
 }
 
 func NewDummyProductCommander(bot *tgbotapi.BotAPI, service service.ProductService) *DummyProductCommander {
 	return &DummyProductCommander{
-		bot:     bot,
-		service: service,
+		bot:                bot,
+		service:            service,
+		callbackQueryQueue: make([]CallbackQueryItem, 5),
 	}
+}
+
+func (c *DummyProductCommander) HandleCallback(inputCb *tgbotapi.CallbackQuery) {
+	lastCb := c.callbackQueryQueue[0]
+
+	switch lastCb.name {
+	case "list":
+		c.CbList(inputCb, lastCb)
+	}
+
+	c.callbackQueryQueue = c.callbackQueryQueue[1:]
 }
 
 func (c *DummyProductCommander) HandleUpdate(inputMsg *tgbotapi.Message) {

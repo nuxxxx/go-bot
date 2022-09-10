@@ -19,3 +19,16 @@ type DummyProductService struct{}
 func NewDummyProductService() *DummyProductService {
 	return &DummyProductService{}
 }
+
+func init() {
+	var i uint64
+
+	for i = 0; i < 100; i++ {
+		products[i] = logistic.Product{
+			ID:       i,
+			Title:    "test",
+			Price:    100,
+			Quantity: 1,
+		}
+	}
+}

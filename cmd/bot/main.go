@@ -37,6 +37,11 @@ func main() {
 	commander := commands.NewDummyProductCommander(bot, productService)
 
 	for update := range updates {
-		commander.HandleUpdate(update.Message)
+		switch {
+		case update.Message != nil:
+			commander.HandleUpdate(update.Message)
+		case update.CallbackQuery != nil:
+			commander.HandleCallback(update.CallbackQuery)
+		}
 	}
 }
