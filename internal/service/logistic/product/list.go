@@ -4,13 +4,13 @@ import (
 	"github/nuxxxcake/go-bot/internal/model/logistic"
 )
 
-const LIMIT = 10
-
 func (ps *DummyProductService) List(cursor uint64, limit uint64) ([]logistic.Product, error) {
-	res := make([]logistic.Product, len(products))
+	res := make([]logistic.Product, limit+1)
 
-	for _, product := range products {
-		res = append(res, product)
+	start := (cursor - 1) * limit
+
+	for i := 0; i <= int(limit); i++ {
+		res[i] = products[start+uint64(i)]
 	}
 
 	return res, nil

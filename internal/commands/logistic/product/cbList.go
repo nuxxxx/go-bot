@@ -1,6 +1,7 @@
 package commands
 
 import (
+	"errors"
 	"strconv"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
@@ -9,10 +10,14 @@ import (
 func handleCbList(c *DummyProductCommander, data string, cq CallbackQueryItem) (string, error) {
 	page, err := strconv.ParseUint(data, 10, 64)
 
-	limit := cq.additionalData.(uint64)
+	if err != nil {
+		return "", errors.New("cannot parse page")
+	}
+
+	limit, err := strconv.ParseUint(cq.additionalData.(string), 10, 64)
 
 	if err != nil {
-		return "", err
+		return "", errors.New("cannot parse limit")
 	}
 
 	products, err := c.service.List(page, limit)

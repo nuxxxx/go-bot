@@ -12,5 +12,5 @@ type Product struct {
 }
 
 func (p *Product) String() string {
-	return fmt.Sprintf("Product: \n\nID: %v\nTitle: %v\nPrice: %v$\nQuantity: %v", p.ID, p.Title, p.Price, p.Quantity)
+	return fmt.Sprintf("\nProduct: \n\nID: %v\nTitle: %v\nPrice: %v$\nQuantity: %v", p.ID, p.Title, p.Price, p.Quantity)
 }

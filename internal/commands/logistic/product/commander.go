@@ -42,11 +42,15 @@ func NewDummyProductCommander(bot *tgbotapi.BotAPI, service service.ProductServi
 	return &DummyProductCommander{
 		bot:                bot,
 		service:            service,
-		callbackQueryQueue: make([]CallbackQueryItem, 5),
+		callbackQueryQueue: []CallbackQueryItem{},
 	}
 }
 
 func (c *DummyProductCommander) HandleCallback(inputCb *tgbotapi.CallbackQuery) {
+	if len(c.callbackQueryQueue) == 0 {
+		return
+	}
+
 	lastCb := c.callbackQueryQueue[0]
 
 	switch lastCb.name {
